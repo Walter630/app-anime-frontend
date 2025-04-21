@@ -1,0 +1,74 @@
+{
+  "todos": [
+    {
+      "title": "Chaisaw Main",
+      "descrition": "anime motoserra",
+      "image": "chainsaw.jpg",
+      "id": 1,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpeg"
+        },
+        {
+          "number": 2,
+          "title": "'O Desafio'",
+          "description": "'Naruto enfrenta Sasuke.'",
+          "image": "cap2Chainsaw.jpeg"
+        }
+      ]
+    },
+    {
+      "title": "Jujutsu Kaisen",
+      "descrition": "Anime",
+      "image": "Jujutsu.jpg",
+      "id": 2
+    },
+    {
+      "title": "DandaDan",
+      "descrition": "asas",
+      "image": "dandadan.jpeg",
+      "id": 3
+    },
+    {
+      "title": "Solo Leveling",
+      "descrition": "Anime mais aleatorio",
+      "image": "soloLeveling.jpg",
+      "id": 4
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "name": "pedro",
+      "email": "pedro@gmmail.com",
+      "senha": "ajsndjasndjsa"
+    },
+    {
+      "nome": "asdasda",
+      "email": "asdad@gmail.com",
+      "senha": "asdasdas",
+      "id": 2
+    },
+    {
+      "nome": "Walter",
+      "email": "Walter@gmail.com",
+      "senha": "12345678",
+      "id": 3
+    },
+    {
+      "nome": "lucas",
+      "email": "lucas@gmail.com",
+      "senha": "12345678",
+      "id": 4
+    },
+    {
+      "nome": "fernanda",
+      "email": "fernandaluizaa@gmail.com",
+      "senha": "walterteamo",
+      "id": 5
+    }
+  ]
+}
