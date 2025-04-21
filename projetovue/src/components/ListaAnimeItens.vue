@@ -15,7 +15,9 @@
             md="4"
           />
           <v-card-title>{{ todo.title }}</v-card-title>
-          <v-card-text>{{ todo.descrition }}.</v-card-text>
+          <v-card-text>
+            Click para ver mais...
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>

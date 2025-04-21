@@ -10,13 +10,37 @@
           "number": 1,
           "title": "Piloto",
           "description": "Uma masmorra",
-          "image": "Cap1Chainsaw.jpeg"
+          "image": "Cap1Chainsaw.jpg"
         },
         {
           "number": 2,
           "title": "'O Desafio'",
           "description": "'Naruto enfrenta Sasuke.'",
-          "image": "cap2Chainsaw.jpeg"
+          "image": "cap2Chainsaw.jpg"
+        },
+        {
+          "number": 3,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "cap3Chainsaw.jpg"
+        },
+        {
+          "number": 4,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        },
+        {
+          "number": 5,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        },
+        {
+          "number": 6,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
         }
       ]
     },
@@ -34,9 +58,53 @@
     },
     {
       "title": "Solo Leveling",
-      "descrition": "Anime mais aleatorio",
+      "descrition": "Solo Leveling é um anime e manhwa (webtoon sul-coreano) que conta a história de Sung Jin-woo, um caçador de baixo nível que é considerado o mais fraco da humanidade. Após uma missão quase fatal, ele recebe um sistema que lhe permite subir de nível sozinho, tornando-se um dos mais poderosos caçadores em um mundo onde humanos caçam monstros em dungeons",
       "image": "soloLeveling.jpg",
       "id": 4
+    },
+    {
+      "title": "Nanatsu no Taisai",
+      "descrition": "Anime do Meliodas",
+      "image": "Nanatsu.jpg",
+      "id": 5,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        },
+        {
+          "number": 2,
+          "title": "'O Desafio'",
+          "description": "'Naruto enfrenta Sasuke.'",
+          "image": "cap2Chainsaw.jpg"
+        },
+        {
+          "number": 3,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "cap3Chainsaw.jpg"
+        },
+        {
+          "number": 4,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        },
+        {
+          "number": 5,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        },
+        {
+          "number": 6,
+          "title": "Piloto",
+          "description": "Uma masmorra",
+          "image": "Cap1Chainsaw.jpg"
+        }
+      ]
     }
   ],
   "usuarios": [

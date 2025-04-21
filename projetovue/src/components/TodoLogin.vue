@@ -23,6 +23,7 @@
         <v-btn type="submit" color="primary" class="mt-2 ma-4 pa-2 ">
           Confirmar
         </v-btn>
+        <v-btn color="red" class="mt-2 ma-4 pa-2">Cancelar</v-btn>
 
         <p class="mt-2">
           <router-link to="/cadastro">Cadastre-se</router-link>
@@ -121,11 +122,17 @@ export default {
 .formulario {
   background-color: rgba(196, 196, 196, 0.452);
   border-radius: 10px;
-  margin: 10px;
   padding: 20px;
+  text-align: center;
 }
 header {
   background-color: rgba(0, 0, 0, 0.76);
-  padding: 40px;
+  padding: 20px;
+}
+footer{
+  background-color: rgba(0, 0, 0, 0.76);
+  padding: 20px;
+  text-align: center;
+  color: white;
 }
 </style>
