@@ -1,13 +1,17 @@
 <template>
-  <div class="px-3">
-    <div>
-      <!-- Aqui vai o conteúdo das rotas -->
-      <router-view />
+  <v-app>
+  
+    <div class="px-3">
+      <div>
+        <!-- Aqui vai o conteúdo das rotas -->
+        <router-view />
 
-      <!-- Spinner global, se quiser -->
-      <TodoSpinner v-if="loading" />
+        <!-- Spinner global, se quiser -->
+        <TodoSpinner v-if="loading" />
+      </div>
     </div>
-  </div>
+  </v-app>
+  
 </template>
 
 <script>

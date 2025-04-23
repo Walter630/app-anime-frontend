@@ -1,55 +1,38 @@
 <template>
-  <header class="Cabecalho">
-    <h2>Cabeça</h2>
-  </header>
+  <v-container class="fill-height d-flex align-center justify-center" fluid style="background-color: #e0e5ec;">
+    <v-card class="pa-6 rounded-xl ma-5" width="400" elevation="4" 
+    style="box-shadow: 10px 10px 20px #bec8d2, -10px -10px 20px #ffffff;"
+    >
+      <v-card-title class="text-h4 text-center mb-4">Login</v-card-title>
 
-  <v-container class="d-flex justify-center align-center pa-5" style="height: 85vh;">
-    <v-sheet class="pa-4" width="400" color="gray-800">
-      <v-form class="formulario" @submit.prevent="login"><br>
-        <h2>Login</h2><br>
-        <v-text-field
-          placeholder="Digite Email"
-          v-model="email"
-          label="Email"
-        />
+      <form @submit.prevent="login">
+        <v-text-field label="Usuário" prepend-inner-icon="mdi-account" variant="outlined" class="mb-4" 
+        placeholder="hsahd@gmail.com"></v-text-field>
+        <v-text-field label="Senha" type="password" prepend-inner-icon="mdi-lock" variant="outlined" class="mb-4"></v-text-field>
+        <a href="">Esqueceu senha</a>
 
-        <v-text-field
-          placeholder="Digite Senha"
-          v-model="senha"
-          label="Senha"
-          type="password"
-        />
-
-        <v-btn type="submit" color="primary" class="mt-2 ma-4 pa-2 ">
-          Confirmar
+        <v-btn color="#6c63ff" block class="white--text" type="submit">
+          Acessar
         </v-btn>
-        <v-btn color="red" class="mt-2 ma-4 pa-2">Cancelar</v-btn>
 
         <p class="mt-2">
-          <router-link to="/cadastro">Cadastre-se</router-link>
+            <router-link to="/cadastro">Cadastre-se</router-link>
         </p>
-
-        <p>Esqueceu <a href="">Senha</a></p>
-
-        <v-alert
-          v-if="mensagem"
-          :type="mensagemTipo"
-          class="mt-4"
-          icon="mdi-alert-circle"
-          dismissible
-        >
-          {{ mensagem }}
-        </v-alert>
-      </v-form>
-    </v-sheet>
+          <v-alert
+            v-if="mensagem"
+            :type="mensagemTipo"
+            class="mt-4"
+            icon="mdi-alert-circle"
+            dismissible
+          >
+            {{ mensagem }}
+          </v-alert>
+        </form>
+    </v-card>
   </v-container>
 
   <!-- Aqui o router-view é o lugar onde os componentes das rotas vão ser renderizados -->
   <router-view />
-
-  <footer class="footer">
-    Redes
-  </footer>
 </template>
 
 
@@ -119,20 +102,6 @@ export default {
 
 
 <style>
-.formulario {
-  background-color: rgba(196, 196, 196, 0.452);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-}
-header {
-  background-color: rgba(0, 0, 0, 0.76);
-  padding: 20px;
-}
-footer{
-  background-color: rgba(0, 0, 0, 0.76);
-  padding: 20px;
-  text-align: center;
-  color: white;
-}
+
+
 </style>

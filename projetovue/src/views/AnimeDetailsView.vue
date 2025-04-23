@@ -1,13 +1,13 @@
 <template>
   <v-container>
     <v-card class="ma-4 pa-4" elevation="4" v-if="anime">
-      <v-img :src="`/imgs/${anime.image}`" height="400px" cover></v-img>
+      <v-img :src="`/imgs/${anime.image}`" height="300px" cover></v-img>
       <v-card-title class="text-h5">{{ anime.title }}</v-card-title>
       <v-card-text>{{ anime.descrition }}</v-card-text>
 
       <v-divider class="my-4"></v-divider>
 
-      <h2 class="text-h6 mb-2">Capítulos</h2>
+      <h2 class="text-h5 mb-2">Capítulos</h2>
 
       <v-row v-if="anime.chapters && anime.chapters.length" dense>
         <v-col
@@ -22,7 +22,7 @@
               :src="`/imgMangas/${chapter.image}`"
               height="200px"
               cover
-              class="mb-2"
+              class="mb-2 images"
               cols="12"
               sm="6"
               md="4"
@@ -56,3 +56,13 @@ const anime = computed(() => {
   return store.state.todos.find((todo) => todo.id === Number(route.params.id));
 });
 </script>
+<style>
+.images {
+  transition: transform 0.3s ease-in-out;
+}
+.images:hover {
+  transform: scale(1.08); /* aumenta 5% */
+  cursor: pointer;
+}
+
+</style>

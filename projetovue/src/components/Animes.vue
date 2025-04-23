@@ -1,5 +1,5 @@
 <template>
-    
+    <v-app-bar flat class="border-b" title="Meu app"></v-app-bar>
     <header class="cabecalho">
         <v-card-title primary-title class="card">
             Mangas
@@ -7,15 +7,17 @@
         <a href="#animes-lancados">Animes</a>
         <a href="">Mangas</a>
     </header>
-    <main>
-        <div>
-            
+    <v-container >
+        <main>
+        <div>  
             <PesquisarAnimes/>
             <section id="animes-lancados">
                 <ListaAnimeItens />
             </section>
         </div>
     </main>
+    </v-container>
+    
     <footer class="rodape">
     <v-card-text>
         @Sobre nos
