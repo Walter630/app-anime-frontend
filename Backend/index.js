@@ -1,8 +1,13 @@
 // backend/index.js
 const express = require('express')
-const path = require('path')
 const app = express()
 const cors = require('cors')
+const http = require('http')
+const bodyParser = require('body-parser')
+
+app.use(cors("*"))
+app.use(express.json())
+app.use(bodyParser.json())
 
 let todos = [
     {
@@ -41,17 +46,14 @@ let todos = [
     }
   ]
 
-  app.put('/todos/:id', (req, res) => {
+app.put('/todos/:id', (req, res) => {
     const { id } = req.params;
     const updated = req.body;
-  
-    todos = todos.map(todo => todo.id == id ? { ...todo, ...updated } : todo);
-  
-    res.json(updated);
-  });
 
-  app.use(cors()) // <- ISSO resolve seu problema
-  app.use(express.json())
+    todos = todos.map(todo => todo.id === id ? { ...todo, ...updated } : todo);
+
+    res.json(updated);
+});
 
 app.get('/todos', (req, res) => {
   res.json(todos)
@@ -63,6 +65,6 @@ app.get('/todos', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'dist'))
 // })
 
-app.listen(3000, () => {
-  console.log('🚀 Backend rodando em http://localhost:3001')
+http.createServer(app).listen(4000, () => {
+  console.log('🚀 Backend rodando em http://localhost:4000')
 })

@@ -50,7 +50,7 @@ export default createStore({
   actions: {
     async getTodos( {commit} ) {
         try {
-            const response = await axios.get('http://localhost:3000/todos')
+            const response = await axios.get('http://localhost:4000/todos')
             commit('storeTodos', response.data)
       } catch (error) {
             console.error('Erro ao buscar todos:', error)
@@ -59,7 +59,7 @@ export default createStore({
 
     async addTodo({commit, dispatch}, data){
         try{
-            await axios.post('http://localhost:3000/todos', data)
+            await axios.post('http://localhost:4000/todos', data)
             dispatch('getTodos')
         } catch (error) {
             console.log("Erro encontrado", error)
@@ -68,7 +68,7 @@ export default createStore({
 
     async updateTodo({ commit }, { id, data }) {
         try {
-          await axios.put(`http://localhost:3000/todos/${id}`, data).then((response) =>{
+          await axios.put(`http://localhost:4000/todos/${id}`, data).then((response) =>{
             commit('storeTodo', response.data)
           })
         } catch (error) {
@@ -79,7 +79,7 @@ export default createStore({
 
     async removeTodos({ commit }, id) {
       try {
-        await axios.delete(`http://localhost:3000/todos/${id}`)
+        await axios.delete(`http://localhost:4000/todos/${id}`)
         commit('removeTodo', id)  // Comita a mutação para remover o todo do estado
       } catch (err) {
         console.error("Erro ao tentar remover", err)
@@ -88,7 +88,7 @@ export default createStore({
     
     async searchTodos({ commit }, query) {
       try {
-        const response = await axios.get(`http://localhost:3000/todos?q=${query}`)
+        const response = await axios.get(`http://localhost:4000/todos?q=${query}`)
         commit('storeTodos', response.data)
       } catch (error) {
         console.error('Erro ao buscar todos:', error)
@@ -97,7 +97,7 @@ export default createStore({
 
     async getUsuario( {commit} ) {
       try {
-          const response = await axios.get('http://localhost:3000/usuarios')
+          const response = await axios.get('http://localhost:4000/usuarios')
           commit('storeUsuarios', response.data)
       } catch (error) {
             console.error('Erro ao buscar todos:', error)
@@ -106,7 +106,7 @@ export default createStore({
 
     async addUsuario({ commit, dispatch }, data) {
       try {
-        await axios.post('http://localhost:3000/usuarios', data)
+        await axios.post('http://localhost:4000/usuarios', data)
         dispatch('getUsuario') // Isso já atualiza a lista inteira
       } catch (error) {
         console.log("Erro encontrado", error)
