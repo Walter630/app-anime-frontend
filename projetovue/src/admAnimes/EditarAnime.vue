@@ -1,12 +1,24 @@
 <template>
-  <header>
-    <v-card-title primary-title style="color: white"> EditarAnimes </v-card-title>
-  </header>
+   <v-app-bar :elevation="2" color="primary" >
+    <template v-slot:prepend>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    </template>
 
+    <v-app-bar-title>EditarAnime</v-app-bar-title>
+
+    <v-btn icon >
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
+
+    <v-btn icon>
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
+  </v-app-bar>
+    
   <v-container>
-    <v-col v-for="(todo, index) in todos" :key="index" cols="12" md="5">
-      <v-card class="ma-2 pa-2" elevation="5">
-        <v-img :src="`/imgs/${todo.image}`" height="400" cover></v-img>
+    <v-col v-for="(todo, index) in todos" :key="index" cols="6" md="12" >
+      <v-card class="ma-2 pa-4" elevation="5">
+        <v-img :src="`/imgs/${todo.image}`" height="50" right="50" cover></v-img>
 
         <v-text-field
           v-model="editedImage"
@@ -32,46 +44,45 @@
             {{ todo.descrition }}
           </div>
         </v-card-text>
+        <v-btn icon @click="startEdition(index, todo)"
+        v-if="editingIndex !== index">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn icon @click="removeTodo(todo)"
+          v-if="editingIndex !== index"
+          color="error">
+         <v-icon >
+            mdi-delete
+          </v-icon>
+        </v-btn>
+        
+         <v-btn icon text @click="saveEdit(todo)" v-if="editingIndex === index">
+         <v-icon>
+          mdi-content-save-plus
+        </v-icon>
+      </v-btn>
+        <v-btn icon class="ml-auto" color="error" v-if="editingIndex === index" 
+        @click="cancelTodo">
+        <v-icon >mdi-close</v-icon>
+      </v-btn>
       </v-card>
-      <v-card-actions>
-        <v-btn color="success" @click="saveEdit(todo)" v-if="editingIndex === index">
-          Salvar
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          @click="startEdition(index, todo)"
-          v-if="editingIndex !== index"
-        >
-          Editar
-        </v-btn>
-        <v-btn
-          class="butao3"
-          color="error"
-          @click="removeTodo(todo)"
-          v-if="editingIndex !== index"
-          >Remover</v-btn
-        >
-
-        <v-btn color="warning" v-if="editingIndex === index" @click="cancelTodo"
-          >Cacelar</v-btn
-        >
-      </v-card-actions>
     </v-col>
   </v-container>
 
-  <footer>Sobre</footer>
+  <v-footer color="primary" class="pa-6">
+    Redes
+  </v-footer>
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { ref } from "vue";
+import { useTodoStore} from '@/stores/todoStore'
 
 export default {
+  
   setup() {
-    const store = useStore();
-
-    const todos = computed(() => store.state.todos);
+    const todoStore = useTodoStore()
+    const todos = todoStore.todos
     const editingIndex = ref(null);
     const editedTitle = ref("");
     const editedDescription = ref("");
@@ -100,7 +111,7 @@ export default {
         image: editedImage.value || todo.image,
       };
 
-      await store.dispatch("updateTodo", {
+      todoStore.updateTodo( {
         id: todo.id,
         data: updatedData,
       });
@@ -109,11 +120,11 @@ export default {
     };
 
     const toggleDone = (index) => {
-      store.commit("toggleDone", index);
+      todoStore.toggleDone(index);
     };
 
     const removeTodo = (todo) => {
-      store.dispatch("removeTodos", todo.id);
+      todoStore.removeTodo(todo.id);
     };
 
     return {
@@ -125,34 +136,13 @@ export default {
       editedImage,
       startEdition,
       cancelTodo,
-      todos,
       removeTodo,
+      todos
     };
   },
 };
 </script>
 
 <style>
-header {
-  padding: 30px;
-  right: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.781);
-  border-radius: 5px;
-}
-.butao1 {
-  background-color: rgba(95, 100, 104, 0.151);
-}
-.butao2 {
-  background-color: rgba(95, 100, 104, 0.151);
-}
-.butao3 {
-  background-color: rgba(95, 100, 104, 0.151);
-}
-footer {
-  padding: 30px;
-  right: 100%;
-  background-color: rgba(0, 0, 0, 0.781);
-  text-align: center;
-}
+
 </style>

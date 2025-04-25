@@ -1,10 +1,11 @@
 <template>
-  <v-app-bar :elevation="2" color="primary">
+  <v-app-bar :elevation="2" color="primary" scroll-behavior="fade">
   <template v-slot:prepend>
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
   </template>
 
   <v-app-bar-title>Bar</v-app-bar-title>
+  
 
   <v-btn icon >
     <v-icon>mdi-magnify</v-icon>
@@ -53,7 +54,7 @@ export default {
     const search = ref("");
 
     // Lista de animes (todos)
-    const todos = computed(() => store.state.todos);
+    const todos = todoStore.todos;
 
     // Filtro com base na busca
     const filteredTodos = computed(() => {

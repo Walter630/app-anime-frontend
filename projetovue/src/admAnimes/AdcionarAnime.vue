@@ -11,6 +11,13 @@
     style="height: 100hv;">
         <v-sheet class="pa-4"  width="400" color="gray-800">
             <v-form class="formulario">
+                <v-file-input 
+                    v-model="image" 
+                    label="Escolha uma imagem" 
+                    accept="image/*"
+                    outlined
+                    ></v-file-input>
+                    <v-btn @click="uploadImage">Upload</v-btn>
                 <v-text-field
                     v-model="title"
                     name="titulo"
@@ -40,8 +47,7 @@
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useTodoStore } from '@/stores/todoStore'
 import { ref } from 'vue'
 export default {
     name: 'TodoList',
@@ -53,22 +59,20 @@ export default {
   },
   
     setup() {
-            const store = useStore()
+            const todoStore = useTodoStore()
             const title = ref('')
             const descrition = ref('')
-            const todos = computed(() => store.state.todos)
 
         const addTodo = () =>{
             if(!title.value){
                 console.warn("Preencha o título e selecione uma imagem.")
                 return  
             }
-
-            store.dispatch('addTodo',{
+            todoStore.addTodo({
                 title: title.value,
-                completed: false,
                 descrition: descrition.value
             })
+            
             title.value = ''
             descrition.value = ''
         }

@@ -12,31 +12,11 @@
               class="images "
               :src="`/imgs/${todo.image}`"
               height="200"
+              right="200"
               @click="goToAnime(todo.id)"
               style="cursor: pointer"
               />
             <v-card-title>{{ todo.title }}</v-card-title>
-
-            <v-card-actions>
-              <v-card-text>
-                Descrição
-              </v-card-text>
-
-              <v-spacer></v-spacer>
-
-              <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-            @click="show = !show"></v-btn>
-            </v-card-actions>
-            
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-                
-                <v-card-text>
-                  {{todo.descrition}}
-                </v-card-text>
-              </div>
-            </v-expand-transition>
           </div>
         </v-card>
       </v-col>
@@ -46,7 +26,7 @@
 
 <script>
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { useTodoStore } from '@/stores/todoStore'
 import { useRouter } from "vue-router";
 
 export default {
@@ -58,20 +38,17 @@ export default {
     },
   },
   setup() {
-    const store = useStore();
-
-    const todos = computed(() => store.state.todos);
-
+    const todoStore = useTodoStore()
     const router = useRouter();
 
     const show = ref(false)
 
     const toggleDone = (index) => {
-      store.commit("toggleDone", index);
+      todoStore.commit(toggleDone(), index);
     };
 
     const removeTodo = (index) => {
-      store.commit("removeTodo", index);
+      todoStore.commit(removeTodo(), index)
     };
 
     const goToAnime = (id) => {
@@ -79,7 +56,6 @@ export default {
     };
 
     return {
-      todos,
       toggleDone,
       removeTodo,
       goToAnime,

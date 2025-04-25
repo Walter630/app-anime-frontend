@@ -1,12 +1,6 @@
 <template>
     <v-app-bar flat class="border-b" title="Meu app"></v-app-bar>
-    <header class="cabecalho">
-        <v-card-title primary-title class="card">
-            Mangas
-        </v-card-title>
-        <a href="#animes-lancados">Animes</a>
-        <a href="">Mangas</a>
-    </header>
+    
     <v-container >
         <main>
         <div>  
@@ -17,12 +11,7 @@
         </div>
     </main>
     </v-container>
-    
-    <footer class="rodape">
-    <v-card-text>
-        @Sobre nos
-    </v-card-text>
-  </footer>
+  
 </template>
 
 <script>

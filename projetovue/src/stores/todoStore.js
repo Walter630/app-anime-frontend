@@ -3,44 +3,56 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useTodoStore = defineStore('todo', {
-  state: () => ({
-    todos: [],
-    usuarios: []
-  }),
+    state: () => ({
+      todos: [],
+      usuarios: [],
+      loading: false,
+      uploadStats: ''
+    }),
+  
 
   actions: {
     // Ação para pegar os todos da API
     async getTodos() {
+    this.loading = true
       try {
-        const { data } = await axios.get('http://localhost:4000/todos')
-        this.todos = data  // Modifica o estado diretamente
+        const response = await axios.get('http://localhost:4000/todos')
+        this.todos = response.data  // Modifica o estado diretamente
       } catch (error) {
         console.error('Erro ao buscar todos:', error.response?.data || error.message)
+      } finally {
+        this.loading = false
       }
     },
 
     // Ação para adicionar um novo "todo"
     async addTodo(data) {
+      this.loading = true
       try {
         const response = await axios.post('http://localhost:4000/todos', data)
         this.todos.push(response.data)  // Atualiza a lista após adicionar
       } catch (error) {
         console.log('Erro ao adicionar todo:', error.response?.data || error.message)
+      } finally {
+        this.loading = false
       }
     },
 
     // Ação para atualizar um "todo"
     async updateTodo({ id, data }) {
       try {
-        const { data: updated } = await axios.put(`http://localhost:4000/todos/${id}`, data)
+        const response = await axios.put(`http://localhost:4000/todos/${id}`, data)
         const index = this.todos.findIndex(todo => todo.id === id)
-        if (index >= 0) {
-          this.todos.splice(index, 1, updated)  // Atualiza o todo no estado
+        if (index !== -1) {
+          this.todos[index] = response.data  // Atualiza o todo no estado
         }
       } catch (error) {
         console.error('Erro ao atualizar todo:', error.response?.data || error.message)
+      } finally {
+        this.loading = false
       }
     },
+  
 
     // Ação para remover um "todo"
     async removeTodos(id) {
@@ -81,11 +93,36 @@ export const useTodoStore = defineStore('todo', {
           email: data.email,
           senha: data.senha
         })
-        console.log("Oaaaa",response.data)
         this.usuarios.push(response.data)  // Atualiza a lista de usuários após adicionar
       } catch (error) {
         console.error('Erro ao adicionar usuário:', error.response?.data || error.message)
       }
+    },
+  
+      // Ação para realizar o upload de uma imagem
+      async uploadImage(file) {
+        if (!file) {
+          this.uploadStatus = 'Nenhuma imagem selecionada';
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        this.uploadStatus = 'Enviando imagem...';
+
+        try {
+          const response = await axios.post('http://localhost:4000/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          this.uploadStatus = 'Imagem enviada com sucesso!';
+          console.log(response.data); // Log de resposta
+        } catch (error) {
+          this.uploadStatus = 'Erro ao enviar a imagem';
+          console.error('Erro ao enviar imagem:', error);
+        }
+      }
     }
-  }
 })
