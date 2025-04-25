@@ -1,0 +1,91 @@
+// src/store/index.js
+import { defineStore } from 'pinia'
+import axios from 'axios'
+
+export const useTodoStore = defineStore('todo', {
+  state: () => ({
+    todos: [],
+    usuarios: []
+  }),
+
+  actions: {
+    // Ação para pegar os todos da API
+    async getTodos() {
+      try {
+        const { data } = await axios.get('http://localhost:4000/todos')
+        this.todos = data  // Modifica o estado diretamente
+      } catch (error) {
+        console.error('Erro ao buscar todos:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para adicionar um novo "todo"
+    async addTodo(data) {
+      try {
+        const response = await axios.post('http://localhost:4000/todos', data)
+        this.todos.push(response.data)  // Atualiza a lista após adicionar
+      } catch (error) {
+        console.log('Erro ao adicionar todo:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para atualizar um "todo"
+    async updateTodo({ id, data }) {
+      try {
+        const { data: updated } = await axios.put(`http://localhost:4000/todos/${id}`, data)
+        const index = this.todos.findIndex(todo => todo.id === id)
+        if (index >= 0) {
+          this.todos.splice(index, 1, updated)  // Atualiza o todo no estado
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar todo:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para remover um "todo"
+    async removeTodos(id) {
+      try {
+        await axios.delete(`http://localhost:4000/todos/${id}`)
+        this.todos = this.todos.filter(todo => todo.id !== id)  // Atualiza o estado removendo o todo
+      } catch (error) {
+        console.error('Erro ao remover todo:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para pesquisar todos (por exemplo, filtrando por título)
+    async searchTodos(query) {
+      try {
+        const { data } = await axios.get(`http://localhost:4000/todos?q=${query}`)
+        this.todos = data  // Atualiza o estado com os resultados da pesquisa
+      } catch (error) {
+        console.error('Erro na busca:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para pegar os usuários da API
+    async getUsuario() {
+      try {
+        const { data } = await axios.get('http://localhost:4000/usuarios')
+        this.usuarios = data  // Modifica o estado com a lista de usuários
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error.response?.data || error.message)
+      }
+    },
+
+    // Ação para adicionar um novo usuário
+    async addUsuario(data) {
+      console.log("ESTA CHEGAD")
+      try {
+        const response = await axios.post('http://localhost:4000/usuarios', {
+          name: data.nome, // alterando de 'nome' para 'name' conforme o backend
+          email: data.email,
+          senha: data.senha
+        })
+        console.log("Oaaaa",response.data)
+        this.usuarios.push(response.data)  // Atualiza a lista de usuários após adicionar
+      } catch (error) {
+        console.error('Erro ao adicionar usuário:', error.response?.data || error.message)
+      }
+    }
+  }
+})

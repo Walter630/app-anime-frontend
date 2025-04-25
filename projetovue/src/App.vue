@@ -1,6 +1,5 @@
 <template>
   <v-app>
-  
     <div class="px-3">
       <div>
         <!-- Aqui vai o conteúdo das rotas -->
@@ -11,13 +10,12 @@
       </div>
     </div>
   </v-app>
-  
 </template>
 
 <script>
 import TodoSpinner from "./components/TodoSpinner.vue";
 import { onMounted, ref } from "vue";
-import { useStore } from "vuex";
+import { useTodoStore } from "@/stores/todoStore";
 
 export default {
   name: "App",
@@ -25,16 +23,13 @@ export default {
 
   setup() {
     const loading = ref(false);
-    const store = useStore();
+    const todoStore = useTodoStore();
 
     onMounted(async () => {
       loading.value = true;
-      await store.dispatch("getTodos");
+      // Esperar as ações de pegar os todos e usuários
+      await Promise.all([todoStore.getTodos(), todoStore.getUsuario()]);
       loading.value = false;
-    });
-
-    onMounted(async () => {
-      await store.dispatch("getUsuarios");
     });
 
     return {

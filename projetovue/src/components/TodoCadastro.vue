@@ -1,61 +1,84 @@
 <template>
-  <v-container class="fill-height d-flex align-center justify-center" fluid style="background-color: #e0e5ec;">
+  <v-container class="pa-16 fill-height d-flex align-center justify-center" 
+  fluid style="background-color: #e0e5ec; 
+  background-image: url('/imgs/Atras.jpg'); background-size: cover;">
     <v-card class="pa-6 rounded-xl ma-5" width="400" elevation="4" 
-    style="box-shadow: 10px 10px 20px #bec8d2, -10px -10px 20px #ffffff;"
-    >
+    style="box-shadow: 10px 10px 20px #bec8d2, -10px -10px 20px #ffffff;">
       <v-card-title class="text-h4 text-center mb-3">Cadastro</v-card-title>
 
-    <form @submit.prevent="addUsuario()">
-      <v-text-field label="Usuario" prepend-inner-icon="mdi-account"
-       variant="outlined" class="mb-3" placeholder="Nome">
-      </v-text-field>
-      <v-text-field label="Email" prepend-inner-icon="mdi-account" variant="outlined" class="mb-4" 
-      placeholder="hsahd@gmail.com"></v-text-field>
-      <v-text-field label="Senha" type="password" prepend-inner-icon="mdi-lock" variant="outlined" class="mb-4"></v-text-field>
-      
-      <v-btn color="#6c63ff" block class="white--text" type="submit">
-        Acessar
-        <v-icon icon="mdi-checkbox-marked-circle"></v-icon>
-      </v-btn>
-        <v-alert
-          v-if="mensagem"
-          :type="mensagemTipo"
-          class="mt-4"
-          icon="mdi-alert-circle"
-          dismissible
-        >
+      <form @submit.prevent="addUsuario()">
+        <v-text-field label="Usuário" v-model="nome" prepend-inner-icon="mdi-account"
+         variant="outlined" class="mb-3" placeholder="Nome">
+        </v-text-field>
+
+        <v-text-field label="Email" v-model="email"
+        :rules="emailRules" prepend-inner-icon="mdi-account" variant="outlined" class="mb-4" 
+        placeholder="hsahd@gmail.com">
+        </v-text-field>
+
+        <small v-if="mensagem && mensagemTipo === 'error' && !email.includes('@gmail.com')" class="text-error">
           {{ mensagem }}
-        </v-alert>
+        </small>
+
+        <v-text-field 
+        label="Senha" v-model="senha"
+        :rules="senhaRules" type="password" 
+        prepend-inner-icon="mdi-lock" 
+        variant="outlined" class="mb-4">
+        </v-text-field>
+
+        <small v-if="mensagem && mensagemTipo === 'error' && senha.length < 8" class="text-error">
+          {{ mensagem }}
+        </small>
+        
+        <v-btn color="#6c63ff" block class="white--text" type="submit">
+          Acessar
+          <v-icon icon="mdi-checkbox-marked-circle"></v-icon>
+        </v-btn>
       </form>
+
+      <v-snackbar v-model="snackbar.visible" :color="snackbar.type" top right>
+        {{ snackbar.message }}
+        <v-btn color="white" text @click="snackbar.visible = false">Fechar</v-btn>
+      </v-snackbar>
+
   </v-card>
 </v-container>
 </template>
   
 <script>
-import { computed, ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import { useStore } from 'vuex/dist/vuex.cjs.js'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useTodoStore } from '@/stores/todoStore'
+
 export default {
   name: 'UsuarioList',
-  props: {
-     usuarios: {
-         type: Object,
-         default: () => ({})
-     },
-},
-    setup() {
-      const store = useStore()
-      const usuarios = computed(() => store.state.usuarios)
+  setup() {
+    const todoStore = useTodoStore()
+    const router = useRouter()
 
-      const email = ref('')
-      const nome = ref('')
-      const senha = ref('')
-      const mensagem = ref('')
-      const mensagemTipo = ref('') // success, error, info, warning
-  
-      const router = useRouter()
-  
-      const addUsuario = () => {
+    const email = ref('')
+    const nome = ref('')
+    const senha = ref('')
+    const mensagem = ref('')
+    const mensagemTipo = ref('') // success, error, info, warning
+    const snackbar = ref({
+      visible: false,
+      message: '',
+      type: 'success'
+    })
+
+    const emailRules = [
+      v => !!v || 'O e-mail é obrigatório',
+      v => /.+@gmail\.com$/.test(v) || 'O e-mail deve ser do tipo @gmail.com'
+    ]
+
+    const senhaRules = [
+      v => !!v || 'A senha é obrigatória',
+      v => v.length >= 8 || 'A senha deve ter no mínimo 8 caracteres'
+    ]
+
+    const addUsuario = async () => {
       if (!email.value.includes('@gmail.com')) {
         mensagem.value = 'Email inválido: use @gmail.com'
         mensagemTipo.value = 'error'
@@ -67,42 +90,66 @@ export default {
         mensagemTipo.value = 'error'
         return
       }
+      
+      try {
+        await todoStore.addUsuario({
+          nome: nome.value,
+          email: email.value,
+          senha: senha.value
+        })
 
-      store.dispatch('addUsuario', {
-        nome: nome.value,
-        email: email.value,
-        senha: senha.value
-      })
+        // Exibe mensagem de sucesso
+        snackbar.value = {
+          visible: true,
+          message: 'Usuário cadastrado com sucesso!',
+          type: 'success'
+        }
 
-      mensagem.value = 'Usuário cadastrado com sucesso!'
-      mensagemTipo.value = 'success'
+        // Limpa os campos
+        nome.value = ''
+        email.value = ''
+        senha.value = ''
 
-      nome.value = ''
-      email.value = ''
-      senha.value = ''
+        // Redireciona após o cadastro
+        setTimeout(() => {
+          router.push('/home')
+        }, 1000)
 
-      router.push('/home')
+      } catch (error) {
+        // Exibe mensagem de erro
+        snackbar.value = {
+          visible: true,
+          message: 'Erro ao cadastrar usuário.',
+          type: 'error'
+        }
+      }
     }
 
     return {
-      email, nome, senha,
-      mensagem, mensagemTipo,
-      addUsuario
+      email,
+      nome,
+      senha,
+      mensagem,
+      mensagemTipo,
+      snackbar,
+      addUsuario,
+      emailRules,
+      senhaRules
     }
   }
 }
 </script>
   
 <style>
-  .formulario {
-    background-color: rgba(196, 196, 196, 0.452);
-    border-radius: 10px;
-    margin: 10px;
-    padding: 20px;
-  }
-  header {
-    background-color: rgba(0, 0, 0, 0.76);
-    padding: 40px;
-  }
+.formulario {
+  background-color: rgba(196, 196, 196, 0.452);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.76);
+  padding: 40px;
+}
 </style>
-  

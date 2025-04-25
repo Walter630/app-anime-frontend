@@ -42,11 +42,11 @@
 <script>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+import { useTodoStore } from '@/stores/todoStore'
 
 export default {
   setup() {
-    const store = useStore();
+    const todoStore = useTodoStore();
     const router = useRouter();
 
     // Campo de busca

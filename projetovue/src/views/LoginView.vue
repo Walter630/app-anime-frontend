@@ -7,16 +7,15 @@
 <script>
 import { computed, onMounted } from 'vue';
 import TodoLogin from '../components/TodoLogin.vue';
-import { useStore } from 'vuex';
+import { useTodoStore } from '../stores/todoStore';
 
 export default {
     components: {TodoLogin},
     setup() {
-        const store = useStore()
-        const usuarios = computed(()=>store.state.usuarios)
+        const todoStore = useTodoStore()
 
         onMounted(() => {
-            store.dispatch('getUsuario') // isso garante que a lista esteja disponível
+           todoStore.getUsuario() // isso garante que a lista esteja disponível
         })
     }
 }
