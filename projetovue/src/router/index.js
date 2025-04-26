@@ -41,6 +41,11 @@ const routes = [
     path: '/anime/:id',
     name: 'AnimeDetails',
     component: () => import('@/views/AnimeDetailsView.vue') // crie essa view
+  },
+  {
+    path: '/editarUsuario',
+    name: 'editarUsuario',
+    component: () => import('@/views/EdicaoUsuarioView.vue')
   }
 ]
 

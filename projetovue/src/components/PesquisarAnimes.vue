@@ -1,20 +1,4 @@
 <template>
-  <v-app-bar :elevation="2" color="primary" scroll-behavior="fade">
-  <template v-slot:prepend>
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  </template>
-
-  <v-app-bar-title>Bar</v-app-bar-title>
-  
-
-  <v-btn icon >
-    <v-icon>mdi-magnify</v-icon>
-  </v-btn>
-
-  <v-btn icon>
-    <v-icon>mdi-dots-vertical</v-icon>
-  </v-btn>
-</v-app-bar>
   
   <v-container class="mt-4 d-flex flex-column flex-sm-row" fluid v-if="search">
     <v-row dense>
@@ -38,6 +22,8 @@
       </v-col>
     </v-row>
   </v-container>
+
+  
 </template>
 
 <script>
@@ -90,5 +76,4 @@ export default {
         transform: scale(1.05);
         cursor: pointer;
     }
-    
 </style>

@@ -1,17 +1,33 @@
 <template>
-    <v-app-bar flat class="border-b" title="Meu app"></v-app-bar>
+    <v-app-bar :elevation="2" color="primary" scroll-behavior="fade">
+    <template v-slot:prepend>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    </template>
+
+    <v-app-bar-title>Bar</v-app-bar-title>
     
+
+    <v-btn icon >
+        <v-icon>mdi-magnify</v-icon>
+    </v-btn>
+
+    <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
+    </v-app-bar>
+  
     <v-container >
         <main>
         <div>  
             <PesquisarAnimes/>
-            <section id="animes-lancados">
-                <ListaAnimeItens />
-            </section>
+            <ListaAnimeItens />
         </div>
     </main>
     </v-container>
-  
+    <v-footer  class="d-flex align-center justify-center ga-2 flex-wrap flex-grow-1 py-3"
+    color="primary">
+    Redes
+  </v-footer>
 </template>
 
 <script>
@@ -21,41 +37,9 @@
     export default {
         components: {ListaAnimeItens, PesquisarAnimes},
     }
-  
-
 </script>
 
 <style>
-template{
-  scroll-behavior: smooth;
-}
-.cabecalho{
-    padding: 30px;
-    right: 100%;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.781);
-    border-radius: 5px;
-}
-.texto{
-    margin: 10px;
-    width: 25%;
-    border: 10px;
-}
-.card{
-    color: white;
-}
-a{
-    text-decoration: none;
-    color: white;
-    margin: 20px;
-}
-a:hover{
-    color: aqua;
-}
-.rodape{
-    padding: 30px;
-    right: 100%;
-    background-color: rgba(0, 0, 0, 0.781);
-    text-align: center;
-}
+
+
 </style>

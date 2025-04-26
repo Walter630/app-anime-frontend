@@ -5,6 +5,29 @@
     </template>
 
     <v-app-bar-title>EditarAnime</v-app-bar-title>
+    <v-menu max-width="200px">
+      <template v-slot:activator="{ props }">
+      <v-btn color="primary" dark slot="activator" v-bind="props">
+        <v-avatar image="/imgs/Nanatsu.jpg">
+        </v-avatar>
+      </v-btn>
+    </template>
+      <v-card>
+      <v-card-text>
+        <div class="mx-auto text-center">
+            <v-avatar
+              image="/imgs/Nanatsu.jpg"
+            />
+            <h3>nome</h3>
+            <p>Email</p>
+            <v-divider class="my-3"></v-divider>
+              <v-btn variant="text" rounded @click="editarConta()"> Editar conta </v-btn>
+              <v-divider class="my-3"></v-divider>
+              <v-btn variant="text" rounded> Sair </v-btn>
+          </div>
+      </v-card-text>   
+      </v-card>
+    </v-menu>
 
     <v-btn icon >
       <v-icon>mdi-magnify</v-icon>
@@ -77,15 +100,16 @@
 <script>
 import { ref } from "vue";
 import { useTodoStore} from '@/stores/todoStore'
+import { useRouter } from "vue-router";
 
 export default {
-  
   setup() {
     const todoStore = useTodoStore()
     const todos = todoStore.todos
     const editingIndex = ref(null);
     const editedTitle = ref("");
     const editedDescription = ref("");
+    const router = useRouter()
 
     const editedImage = ref("");
 
@@ -127,6 +151,10 @@ export default {
       todoStore.removeTodo(todo.id);
     };
 
+    const editarConta = (id) => {
+      router.push({name: 'editarUsuario', params: { id } })
+    };
+
     return {
       toggleDone,
       saveEdit,
@@ -137,7 +165,8 @@ export default {
       startEdition,
       cancelTodo,
       removeTodo,
-      todos
+      todos,
+      editarConta
     };
   },
 };
