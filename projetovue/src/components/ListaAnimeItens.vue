@@ -1,5 +1,18 @@
 <template>
-  <v-container >
+  <v-window v-model="onboarding" show-arrows="hover" >
+    <v-window-item v-for="(image, n) in imageList" :key="`card-${n}`">
+      <v-card
+        class="d-flex align-center justify-center ma-2"
+        elevation="2"
+        height="200"
+        
+      >
+      
+        <h1 class="text-h2"><img :src="image" alt="Imagem" height="200"/></h1>
+      </v-card>
+    </v-window-item>
+  </v-window>
+  <v-container>
     <v-row>
       <v-col v-for="(todo, index) in todos" :key="index" :todo="todo" 
             cols="12"
@@ -16,6 +29,7 @@
               @click="goToAnime(todo.id)"
               style="cursor: pointer"
               />
+          
             <v-card-title>{{ todo.title }}</v-card-title>
           </div>
         </v-card>
@@ -25,7 +39,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useTodoStore } from '@/stores/todoStore'
 import { useRouter } from "vue-router";
 
@@ -40,6 +54,17 @@ export default {
   setup() {
     const todoStore = useTodoStore()
     const router = useRouter();
+    const todos = todoStore.todos
+    
+    const length = ref(4)
+    const onboarding = ref(0)
+
+    const imageList = ref([
+        "/imgs/Nanatsu.jpg", 
+        "/imgs/Jujutsu.jpg", 
+        "/imgs/chainsaw.jpg", 
+        "/imgs/soloLeveling.jpg"
+      ]);
 
     const show = ref(false)
 
@@ -59,17 +84,29 @@ export default {
       toggleDone,
       removeTodo,
       goToAnime,
-      show
+      show, 
+      length,
+      onboarding,
+      imageList,
+      todos
     };
   },
 };
 </script>
 
 <style scoped>
+/* Aplicando transição suave na troca de imagem de fundo */
 .images {
   transition: transform 0.3s ease-in-out;
 }
 .images:hover {
+  transform: scale(1.08); /* aumenta 5% */
+  cursor: pointer;
+}
+img{
+  transition: transform 0.3s ease-in-out;
+}
+img:hover{
   transform: scale(1.08); /* aumenta 5% */
   cursor: pointer;
 }

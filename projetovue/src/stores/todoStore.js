@@ -7,7 +7,8 @@ export const useTodoStore = defineStore('todo', {
       todos: [],
       usuarios: [],
       loading: false,
-      uploadStats: ''
+      uploadStats: '',
+      userLogado: null
     }),
   
 
@@ -85,15 +86,14 @@ export const useTodoStore = defineStore('todo', {
     },
 
     // Ação para adicionar um novo usuário
-    async addUsuario(data) {
-      console.log("ESTA CHEGAD")
+    async addUsuario({ nome, email, senha }) {
       try {
         const response = await axios.post('http://localhost:4000/usuarios', {
-          name: data.nome, // alterando de 'nome' para 'name' conforme o backend
-          email: data.email,
-          senha: data.senha
+          name: nome, // alterando de 'nome' para 'name' conforme o backend
+          email: email,
+          senha: senha
         })
-        this.usuarios.push(response.data)  // Atualiza a lista de usuários após adicionar
+        return response.data;  // Atualiza a lista de usuários após adicionar
       } catch (error) {
         console.error('Erro ao adicionar usuário:', error.response?.data || error.message)
       }
@@ -123,6 +123,11 @@ export const useTodoStore = defineStore('todo', {
           this.uploadStatus = 'Erro ao enviar a imagem';
           console.error('Erro ao enviar imagem:', error);
         }
+      },
+
+      setUsuarioLogado(usuario){
+        this.userLogado = usuario
       }
     }
+
 })

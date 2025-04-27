@@ -5,7 +5,7 @@
     </template>
 
     <v-app-bar-title>EditarAnime</v-app-bar-title>
-    <v-menu max-width="200px">
+    <v-menu max-width="200px"  :close-on-content-click="false">
       <template v-slot:activator="{ props }">
       <v-btn color="primary" dark slot="activator" v-bind="props">
         <v-avatar image="/imgs/Nanatsu.jpg">
@@ -32,13 +32,25 @@
     <v-btn icon >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
+    <v-menu max-width="200px" :close-on-content-click="false">
+    <template v-slot:activator="{ props }">
+        <v-btn  slot="activator" v-bind="props">
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-text>
+          <div class="mx-auto text-center"></div>
+          <v-btn variant="text" rounded> Titulo </v-btn>
+            <v-divider class="my-3"></v-divider>
+            <v-btn variant="text" rounded> Sair </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-menu>
 
-    <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
   </v-app-bar>
     
-  <v-container>
+  <v-container  class="pa-12" style="margin-top: 50px">
     <v-col v-for="(todo, index) in todos" :key="index" cols="6" md="12" >
       <v-card class="ma-2 pa-4" elevation="5">
         <v-img :src="`/imgs/${todo.image}`" height="50" right="50" cover></v-img>

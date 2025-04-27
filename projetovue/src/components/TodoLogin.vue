@@ -31,6 +31,7 @@
         <v-btn color="#6c63ff" block class="white--text" type="submit">
           Acessar
         </v-btn>
+          
 
         <p class="mt-2">
             <router-link to="/cadastro">Cadastre-se</router-link>
@@ -70,6 +71,7 @@ export default {
         user?.email?.toLowerCase() === email.value.trim().toLowerCase()
       );
 
+
       // Se o usuário não for encontrado
       if (!usuarioEncontrado) {
         mensagem.value = 'Email não cadastrado';
@@ -90,14 +92,17 @@ export default {
 
       // Redireciona para a página correta
       if (usuarioEncontrado.email.toLowerCase() === 'walter@gmail.com') {
-        router.push('/adcionarAnime');
+        todoStore.setUsuarioLogado(usuarioEncontrado) // <- Aqui!
+        router.push('/home');
       } else {
+        todoStore.setUsuarioLogado(usuarioEncontrado) // <- Aqui também!
         router.push('/home');
       }
 
       // Limpa os campos após o login
       email.value = '';
       senha.value = '';
+
     };
 
     return {

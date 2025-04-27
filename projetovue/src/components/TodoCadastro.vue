@@ -79,52 +79,79 @@ export default {
     ]
 
     const addUsuario = async () => {
-      if (!email.value.includes('@gmail.com')) {
-        mensagem.value = 'Email inválido: use @gmail.com'
-        mensagemTipo.value = 'error'
-        return
+  // Prevenção de email inválido e senha curta
+  if (!email.value.includes('@gmail.com')) {
+    mensagem.value = 'Email inválido: use @gmail.com';
+    mensagemTipo.value = 'error';
+    return;
+  }
+
+  if (senha.value.length < 8) {
+    mensagem.value = 'Senha muito curta (mínimo 8 caracteres)';
+    mensagemTipo.value = 'error';
+    return;
+  }
+
+  let isRedirecting = false;  // Controla o redirecionamento
+
+  try {
+    // Chama a função para adicionar usuário
+     await todoStore.addUsuario({
+      nome: nome.value,
+      email: email.value,
+      senha: senha.value
+    });
+
+    // Após sucesso no cadastro, faz login automaticamente
+    todoStore.setUsuarioLogado({
+      name: nome.value,
+      email: email.value
+    });
+
+    // Mostra snackbar de sucesso
+    snackbar.value = {
+      visible: true,
+      message: 'Usuário cadastrado com sucesso!',
+      type: 'success'
+    };
+
+    // Limpa campos
+    nome.value = '';
+    email.value = '';
+    senha.value = '';
+
+    // Marca redirecionamento como permitido
+    isRedirecting = true;
+
+    // Redireciona para a página home após um tempo
+    setTimeout(() => {
+      if (isRedirecting) {
+        router.push('/home');
       }
+    }, 1000);
 
-      if (senha.value.length < 8) {
-        mensagem.value = 'Senha muito curta (mínimo 8 caracteres)'
-        mensagemTipo.value = 'error'
-        return
-      }
-      
-      try {
-        await todoStore.addUsuario({
-          nome: nome.value,
-          email: email.value,
-          senha: senha.value
-        })
-
-        // Exibe mensagem de sucesso
-        snackbar.value = {
-          visible: true,
-          message: 'Usuário cadastrado com sucesso!',
-          type: 'success'
-        }
-
-        // Limpa os campos
-        nome.value = ''
-        email.value = ''
-        senha.value = ''
-
-        // Redireciona após o cadastro
-        setTimeout(() => {
-          router.push('/home')
-        }, 1000)
-
-      } catch (error) {
-        // Exibe mensagem de erro
-        snackbar.value = {
-          visible: true,
-          message: 'Erro ao cadastrar usuário.',
-          type: 'error'
-        }
-      }
+  } catch (error) {
+    // Se ocorrer erro de email duplicado
+    if (error.response && error.response.status === 409) {
+      snackbar.value = {
+        visible: true,
+        message: 'Email já cadastrado!',
+        type: 'error'
+      };
+    } else {
+      snackbar.value = {
+        visible: true,
+        message: 'Erro ao cadastrar usuário.',
+        type: 'error'
+      };
     }
 
+    // Impede o redirecionamento caso erro
+    isRedirecting = false;  // Impede navegação
+
+    return;  // Não prossegue com o código, cancelando o redirecionamento
+  }
+};
     return {
       email,
       nome,
@@ -134,7 +161,7 @@ export default {
       snackbar,
       addUsuario,
       emailRules,
-      senhaRules
+      senhaRules,
     }
   }
 }
@@ -148,8 +175,4 @@ export default {
   padding: 20px;
 }
 
-header {
-  background-color: rgba(0, 0, 0, 0.76);
-  padding: 40px;
-}
 </style>
