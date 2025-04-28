@@ -1,9 +1,9 @@
 <template>
   <v-container
-  class="pa-0 d-flex align-center justify-center fill-height"
-  fluid
-  style="background: url('/imgs/Atras.jpg') no-repeat center center / cover; min-height: 100vh;"
-    >
+    class="pa-0 d-flex align-center justify-center fill-height"
+    fluid
+    style="background: url('/imgs/Atras.jpg') no-repeat center center / cover; min-height: 100vh;"
+  >
     <v-card class="card pa-6 rounded-xl ma-5" width="400" elevation="4" 
     style="box-shadow: 10px 10px 20px #bec8d2, -10px -10px 20px #ffffff;">
       <v-card-title class="text-h4 text-center mb-4"><img src="/logo.png" alt=""></v-card-title>
@@ -17,9 +17,11 @@
           class="mb-2" 
           placeholder="pedro@gmail.com">
         </v-text-field>
-        <small v-if="mensagem && mensagemTipo === 'error' && !usuarioEncontrado" class="text-error">
+
+        <small v-if="mensagem && mensagemTipo === 'error'" class="text-error">
             {{ mensagem }}
-          </small>
+        </small>
+
         <v-text-field 
           label="Senha" 
           v-model="senha" 
@@ -34,7 +36,6 @@
           Acessar
         </v-btn>
           
-
         <p class="mt-2">
             <router-link to="/cadastro">Cadastre-se</router-link>
         </p>
@@ -49,9 +50,10 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTodoStore } from '@/stores/todoStore'
+import axios from 'axios';
 
 export default {
-  name: 'UsuarioList',
+  name: 'Login',
   setup() {
     const todoStore = useTodoStore();
     const router = useRouter();
@@ -62,49 +64,34 @@ export default {
     const mensagemTipo = ref('');
 
     const login = async () => {
-      // Espera que o getUsuario() busque os usuários
-      await todoStore.getUsuario();
-
-      // Acesso direto ao array de usuários
-      const usuariosAtualizados = todoStore.usuarios;
-
-      // Encontra o usuário pelo email
-      const usuarioEncontrado = usuariosAtualizados.find(user =>
-        user?.email?.toLowerCase() === email.value.trim().toLowerCase()
-      );
-
-
-      // Se o usuário não for encontrado
-      if (!usuarioEncontrado) {
-        mensagem.value = 'Email não cadastrado';
+      // Verifica se email e senha estão preenchidos
+      if (!email.value || !senha.value) {
+        mensagem.value = 'Por favor, preencha todos os campos.';
         mensagemTipo.value = 'error';
         return;
       }
 
-      // Se a senha estiver incorreta
-      if (usuarioEncontrado.senha !== senha.value) {
-        mensagem.value = 'Senha incorreta';
+      try {
+        // Envia a requisição para a API de login no backend
+        const response = await axios.post('/login', { email: email.value, senha: senha.value });
+
+        if (response.data.usuario) {
+          // Sucesso no login
+          todoStore.setUsuarioLogado(response.data.usuario);
+          router.push('/home');
+        } else {
+          mensagem.value = response.data.message || 'Erro ao fazer login';
+          mensagemTipo.value = 'error';
+        }
+      } catch (error) {
+        console.error(error);
+        mensagem.value = 'Erro interno ao fazer login. Tente novamente.';
         mensagemTipo.value = 'error';
-        return;
-      }
-
-      // Se login for bem-sucedido
-      mensagem.value = 'Logado com sucesso';
-      mensagemTipo.value = 'success';
-
-      // Redireciona para a página correta
-      if (usuarioEncontrado.email.toLowerCase() === 'walter@gmail.com') {
-        todoStore.setUsuarioLogado(usuarioEncontrado) // <- Aqui!
-        router.push('/home');
-      } else {
-        todoStore.setUsuarioLogado(usuarioEncontrado) // <- Aqui também!
-        router.push('/home');
       }
 
       // Limpa os campos após o login
       email.value = '';
       senha.value = '';
-
     };
 
     return {
@@ -118,12 +105,11 @@ export default {
 };
 </script>
 
-
 <style scoped>
-img{
+img {
   height: 100px;
 }
-.card{
+.card {
   background-color: rgba(255, 255, 255, 0.7);
 }
 .v-container {

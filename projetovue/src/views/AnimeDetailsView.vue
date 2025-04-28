@@ -1,10 +1,27 @@
 <template>
+  <v-app-bar :elevation="2" color="black" dark>
+  <v-row class="d-flex align-center w-100" no-gutters>
+    <v-col cols="auto" class="d-flex align-center">
+      <v-app-bar-nav-icon class="d-none d-md-flex"></v-app-bar-nav-icon>
+      <v-btn icon @click="Home">
+        <v-icon>mdi-arrow-left-bold-outline</v-icon>
+      </v-btn>
+      <v-card-title>
+        <img src="/logo.png" height="50" style="margin-top: 5px;" />
+      </v-card-title>
+    </v-col>
+    <v-col cols="auto" class="d-flex justify-end">
+      <v-app-bar-title class="d-none d-md-flex">Yokosu</v-app-bar-title>
+    </v-col>
+  </v-row>
+  </v-app-bar>
   <v-empty-state
     icon="mdi-magnify"
     text="Pagina ainda em Construcao aguarde"
     title="We couldn't find a match."
+    style="margin-top: 200px;"
   ></v-empty-state>
-  <!-- <v-container>
+<!-- <v-container>
     <v-card class="ma-4 pa-4" elevation="4" v-if="anime">
       <v-img :src="`/imgs/${anime.image}`" height="300px" cover></v-img>
       <v-card-title class="text-h5">{{ anime.title }}</v-card-title>
@@ -47,19 +64,33 @@
 
     <v-alert type="error" v-else> Anime não encontrado. </v-alert>
   </v-container> -->
-</template>
+</template> 
 
-<script setup>
+<script >
 import { useRoute } from "vue-router";
-import { useStore } from "vuex";
+
 import { computed } from "vue";
+import router from "../router";
+import { useTodoStore } from "../stores/todoStore";
+export default {
+  setup(){
+    const route = useRoute();
+    const todoStore = useTodoStore()
+    const todos = todoStore.todos
 
-const route = useRoute();
-const store = useStore();
+    const anime = computed(() => {
+      return todoStore.todos.find((todo) => todo.id === Number(route.params.id));
+    });
+    const Home = () => {
+      router.push('/home')
+    }
+    return{
+      anime,
+      Home
+    }
+  }
+}
 
-const anime = computed(() => {
-  return store.state.todos.find((todo) => todo.id === Number(route.params.id));
-});
 </script>
 <style>
 .images {

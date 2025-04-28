@@ -1,25 +1,30 @@
 <template>
+  <v-card-title primary-title>
+    <h2><v-icon>mdi-fire</v-icon>Animes em Alta <v-icon>mdi-fire</v-icon></h2>
+  </v-card-title>
   <v-window v-model="onboarding" show-arrows="hover" >
-    <v-window-item v-for="(image, n) in imageList" :key="`card-${n}`">
+    <v-window-item v-for="(image, n) in imageList" :key="`card-${n}`" >
       <v-card
         class="d-flex align-center justify-center ma-2"
         elevation="2"
         height="200"
-        
+        color="black" dark
       >
-      
-        <h1 class="text-h2"><img :src="image" alt="Imagem" height="200"/></h1>
+         <img :src="image" alt="Imagem" height="500" width="1000" />
       </v-card>
     </v-window-item>
   </v-window>
   <v-container>
+    <v-card-title primary-title>
+    <h2>Animes</h2>
+  </v-card-title>
     <v-row>
       <v-col v-for="(todo, index) in todos" :key="index" :todo="todo" 
             cols="12"
             sm="4"
             md="3"
             lg="3">
-        <v-card class="ma-2 pa-2"  elevation="3">
+        <v-card class="ma-2 pa-2"  elevation="3" style="background-color: black;">
           <div class="d-flex flex-column flex-ms-row">
             <v-img
               class="images "
@@ -30,7 +35,7 @@
               style="cursor: pointer"
               />
           
-            <v-card-title>{{ todo.title }}</v-card-title>
+            <v-card-title class="title">{{ todo.title }}</v-card-title>
           </div>
         </v-card>
       </v-col>
@@ -39,7 +44,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref } from 'vue';
 import { useTodoStore } from '@/stores/todoStore'
 import { useRouter } from "vue-router";
 
@@ -98,6 +103,7 @@ export default {
 /* Aplicando transição suave na troca de imagem de fundo */
 .images {
   transition: transform 0.3s ease-in-out;
+  
 }
 .images:hover {
   transform: scale(1.08); /* aumenta 5% */
@@ -105,9 +111,16 @@ export default {
 }
 img{
   transition: transform 0.3s ease-in-out;
+  
 }
 img:hover{
   transform: scale(1.08); /* aumenta 5% */
   cursor: pointer;
+}
+h2{
+  color: white;
+}
+.title{
+  color: white;
 }
 </style>

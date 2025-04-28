@@ -9,17 +9,19 @@
                 >
                     <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-            
+
     </v-app-bar> 
     
     <v-container>
         <main class="pa-12" style="margin-top: 250px">
             <v-cols cols="5" ma-3 pa-2>
                 <v-card >
+                <h1>sa</h1>
                     <v-card-title >
-                        
-                        s
-                        {{ useEdit.nome }}
+                        <h2>{{ todoStore.userLogado?.email || 'Usuário não logado'}} </h2>
+                        <small v-if="todoStore.userLogado && todoStore.userLogado.email" class="text-success">
+                        Usuário logado: {{ todoStore.userLogado.email }}
+                        </small>
                     </v-card-title>
                 </v-card>
             </v-cols>
@@ -30,18 +32,21 @@
 <script >
 import {useTodoStore} from '@/stores/todoStore'
 import { computed } from "vue";
+import TodoLogin from '@/components/TodoLogin.vue';
 export default {
+    components: {TodoLogin},
     setup() {
         const todoStore = useTodoStore()
         const usuarios = todoStore.usuarios
 
         const useEdit = computed(() => {
-            todoStore.userLogado || {}
-        })
+            return todoStore.userLogado ? todoStore.userLogado : null;
+        });
 
         return{
             usuarios,
-            useEdit
+            useEdit,
+           
         }
     }
 }

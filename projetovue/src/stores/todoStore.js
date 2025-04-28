@@ -125,8 +125,11 @@ export const useTodoStore = defineStore('todo', {
         }
       },
 
-      setUsuarioLogado(usuario){
-        this.userLogado = usuario
+      setUsuarioLogado(user){
+        this.userLogado = user
+      },
+      setUsuarios(usuarios) {
+        this.usuarios = usuarios;  // Atualiza a lista de usuários
       }
     }
 

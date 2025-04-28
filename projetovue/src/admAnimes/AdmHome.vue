@@ -23,7 +23,7 @@
             <v-divider class="my-3"></v-divider>
               <v-btn variant="text" rounded @click="editarConta()"> Editar conta </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn variant="text" rounded> Sair </v-btn>
+              <v-btn variant="text" rounded @click="logout"> Sair </v-btn>
           </div>
       </v-card-text>   
       </v-card>
@@ -68,10 +68,22 @@
 <script>
 import AdcionarAnime from './AdcionarAnime.vue';
 import EditarAnime from './EditarAnime.vue';
+import router from '../router';
 export default {
     components: {AdcionarAnime, EditarAnime},
     setup() {
-
+      const editarConta = (id) => {
+        router.push({name: 'editarUsuario', params: { id } })
+      }
+      const logout = () => {
+            // Aqui você poderia limpar o token/login do usuário
+          console.log('Usuário deslogado')
+          router.push('/login')
+        }
+    return{
+      editarConta, 
+      logout
+    }
     }
 }
 

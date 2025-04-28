@@ -65,7 +65,7 @@ export default {
       }
       todoStore.addTodo({
         title: title.value,
-        description: descrition.value
+        descrition: descrition.value
       })
       limpar()
       dialog.value = false // fecha o dialog só depois de confirmar
@@ -81,8 +81,6 @@ export default {
       limpar()
       dialog.value = false // fecha o dialog ao cancelar
     }
-
-   
 
     return {
       dialog,

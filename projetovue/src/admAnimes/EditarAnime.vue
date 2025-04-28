@@ -41,7 +41,7 @@
          v-if="editingIndex !== index">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
-        <v-btn icon small color="error" @click="removeTodo(todo)"
+        <v-btn icon small color="error" @click="removeTodo(todo.id)"
         v-if="editingIndex !== index">
           <v-icon>mdi-delete</v-icon>
         </v-btn>
@@ -73,7 +73,6 @@ export default {
     const editingIndex = ref(null);
     const editedTitle = ref("");
     const editedDescription = ref("");
-    const router = useRouter()
 
     const editedImage = ref("");
 
@@ -115,9 +114,7 @@ export default {
       todoStore.removeTodo(todo.id);
     };
 
-    const editarConta = (id) => {
-      router.push({name: 'editarUsuario', params: { id } })
-    };
+    
 
     return {
       toggleDone,
@@ -130,7 +127,6 @@ export default {
       cancelTodo,
       removeTodo,
       todos,
-      editarConta
     };
   },
 };
