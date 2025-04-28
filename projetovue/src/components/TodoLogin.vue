@@ -1,7 +1,9 @@
 <template>
-  <v-container class="pa-14 fill-height d-flex align-center justify-center"
-   fluid style="background-image: url('/imgs/Atras.jpg'); background-size: cover;
-   background-position: center;">
+  <v-container
+  class="pa-0 d-flex align-center justify-center fill-height"
+  fluid
+  style="background: url('/imgs/Atras.jpg') no-repeat center center / cover; min-height: 100vh;"
+    >
     <v-card class="card pa-6 rounded-xl ma-5" width="400" elevation="4" 
     style="box-shadow: 10px 10px 20px #bec8d2, -10px -10px 20px #ffffff;">
       <v-card-title class="text-h4 text-center mb-4"><img src="/logo.png" alt=""></v-card-title>
@@ -13,7 +15,7 @@
           prepend-inner-icon="mdi-account" 
           variant="outlined" 
           class="mb-2" 
-          placeholder="hsahd@gmail.com">
+          placeholder="pedro@gmail.com">
         </v-text-field>
         <small v-if="mensagem && mensagemTipo === 'error' && !usuarioEncontrado" class="text-error">
             {{ mensagem }}
@@ -120,9 +122,11 @@ export default {
 <style scoped>
 img{
   height: 100px;
-  right: 100px;
 }
 .card{
-  background-color: rgb(red, green, blue, 0.1);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.v-container {
+  padding: 0; /* Remove padding padrão */
 }
 </style>

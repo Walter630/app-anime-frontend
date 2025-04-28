@@ -56,7 +56,7 @@ export const useTodoStore = defineStore('todo', {
   
 
     // Ação para remover um "todo"
-    async removeTodos(id) {
+    async removeTodo(id) {
       try {
         await axios.delete(`http://localhost:4000/todos/${id}`)
         this.todos = this.todos.filter(todo => todo.id !== id)  // Atualiza o estado removendo o todo

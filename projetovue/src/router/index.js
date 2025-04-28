@@ -46,6 +46,11 @@ const routes = [
     path: '/editarUsuario',
     name: 'editarUsuario',
     component: () => import('@/views/EdicaoUsuarioView.vue')
+  },
+  {
+    path: '/admHome',
+    name: 'admHome',
+    component: () => import('@/views/AdmHomeView.vue')
   }
 ]
 

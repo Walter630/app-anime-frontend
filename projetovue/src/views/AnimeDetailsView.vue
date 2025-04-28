@@ -1,5 +1,10 @@
 <template>
-  <v-container>
+  <v-empty-state
+    icon="mdi-magnify"
+    text="Pagina ainda em Construcao aguarde"
+    title="We couldn't find a match."
+  ></v-empty-state>
+  <!-- <v-container>
     <v-card class="ma-4 pa-4" elevation="4" v-if="anime">
       <v-img :src="`/imgs/${anime.image}`" height="300px" cover></v-img>
       <v-card-title class="text-h5">{{ anime.title }}</v-card-title>
@@ -41,7 +46,7 @@
     </v-card>
 
     <v-alert type="error" v-else> Anime não encontrado. </v-alert>
-  </v-container>
+  </v-container> -->
 </template>
 
 <script setup>

@@ -19,7 +19,7 @@
     <v-menu max-width="200px"  :close-on-content-click="false">
       <template v-slot:activator="{ props }">
         <v-btn color="primary" dark v-bind="props">
-        <v-avatar image="/imgs/Nanatsu.jpg">
+          <v-avatar image="/imgs/Nanatsu.jpg">
         </v-avatar>
       </v-btn>
     </template>
@@ -77,7 +77,7 @@
             const todoStore = useTodoStore()
             const router = useRouter()
             const irPara = (pagina) => {
-                router.push('/adcionarAnime')
+                router.push('/AdmHome')
             }
             const logout = () => {
             // Aqui você poderia limpar o token/login do usuário
