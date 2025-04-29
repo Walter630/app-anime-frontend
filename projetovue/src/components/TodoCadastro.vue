@@ -99,7 +99,7 @@ export default {
   try {
     // Chama a função para adicionar usuário
      await todoStore.addUsuario({
-      nome: nome.value,
+      name: nome.value,
       email: email.value,
       senha: senha.value
     });

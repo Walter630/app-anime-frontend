@@ -86,16 +86,17 @@ export const useTodoStore = defineStore('todo', {
     },
 
     // Ação para adicionar um novo usuário
-    async addUsuario({ nome, email, senha }) {
+    async addUsuario({ name, email, senha }) {
       try {
         const response = await axios.post('http://localhost:4000/usuarios', {
-          name: nome, // alterando de 'nome' para 'name' conforme o backend
+          name: name, // alterando de 'nome' para 'name' conforme o backend
           email: email,
           senha: senha
         })
         return response.data;  // Atualiza a lista de usuários após adicionar
       } catch (error) {
         console.error('Erro ao adicionar usuário:', error.response?.data || error.message)
+        throw error; //
       }
     },
   
@@ -124,13 +125,24 @@ export const useTodoStore = defineStore('todo', {
           console.error('Erro ao enviar imagem:', error);
         }
       },
+      loadUsuarioLogado() {
+        const userData = localStorage.getItem('userLogado');
+        if (userData) {
+          this.userLogado = JSON.parse(userData); // 🔥 pega o que estava salvo
+        }
+      },
 
-      setUsuarioLogado(user){
-        this.userLogado = user
+      setUsuarioLogado(user) {
+        this.userLogado = user;
+        localStorage.setItem('userLogado', JSON.stringify(user)); // 🔥 salva no localStorage
       },
       setUsuarios(usuarios) {
         this.usuarios = usuarios;  // Atualiza a lista de usuários
-      }
+      },
+      logout() {
+        this.userLogado = null;
+        localStorage.removeItem('userLogado'); // 🔥 remove do localStorage
+      },
     }
 
 })

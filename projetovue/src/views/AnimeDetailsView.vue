@@ -2,7 +2,7 @@
   <v-app-bar :elevation="2" color="black" dark>
   <v-row class="d-flex align-center w-100" no-gutters>
     <v-col cols="auto" class="d-flex align-center">
-      <v-app-bar-nav-icon class="d-none d-md-flex"></v-app-bar-nav-icon>
+      
       <v-btn icon @click="Home">
         <v-icon>mdi-arrow-left-bold-outline</v-icon>
       </v-btn>

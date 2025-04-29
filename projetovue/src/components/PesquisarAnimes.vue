@@ -1,6 +1,4 @@
 <template>
-  
-  
   <v-container class="mt-4 d-flex flex-column flex-sm-row" fluid v-if="search">
     <v-row dense>
       <v-col

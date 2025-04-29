@@ -49,7 +49,7 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useTodoStore } from '@/stores/todoStore'
+import { useTodoStore } from '@/stores/todoStore';
 import axios from 'axios';
 
 export default {
@@ -64,7 +64,8 @@ export default {
     const mensagemTipo = ref('');
 
     const login = async () => {
-      // Verifica se email e senha estão preenchidos
+      mensagem.value = ''; // limpa mensagens anteriores
+
       if (!email.value || !senha.value) {
         mensagem.value = 'Por favor, preencha todos os campos.';
         mensagemTipo.value = 'error';
@@ -72,26 +73,37 @@ export default {
       }
 
       try {
-        // Envia a requisição para a API de login no backend
-        const response = await axios.post('/login', { email: email.value, senha: senha.value });
+        const response = await axios.post('http://localhost:4000/usuarios/login', {
+          email: email.value,
+          senha: senha.value,
+        });
 
         if (response.data.usuario) {
-          // Sucesso no login
           todoStore.setUsuarioLogado(response.data.usuario);
+          localStorage.setItem('token', response.data.token);
+          // Salva no LocalStorage
+          
           router.push('/home');
-        } else {
+          
+          email.value = '';
+          senha.value = '';
+        }
+          else {
           mensagem.value = response.data.message || 'Erro ao fazer login';
           mensagemTipo.value = 'error';
         }
       } catch (error) {
-        console.error(error);
-        mensagem.value = 'Erro interno ao fazer login. Tente novamente.';
+        console.error('Erro no login:', error);
+
+        // Aqui tentamos pegar a mensagem que o backend mandou
+        if (error.response && error.response.data && error.response.data.message) {
+          mensagem.value = error.response.data.message;
+        } else {
+          mensagem.value = 'Erro interno ao fazer login. Tente novamente.';
+        }
+
         mensagemTipo.value = 'error';
       }
-
-      // Limpa os campos após o login
-      email.value = '';
-      senha.value = '';
     };
 
     return {
@@ -104,6 +116,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 img {

@@ -32,7 +32,7 @@
     <v-btn icon >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-menu max-width="200px" :close-on-content-click="false">
+    <v-menu max-width="20px" :close-on-content-click="false">
     <template v-slot:activator="{ props }">
         <v-btn  slot="activator" v-bind="props">
           <v-icon>mdi-dots-vertical</v-icon>

@@ -1,6 +1,8 @@
 // src/router/index.js
 
 import { createRouter, createWebHistory } from 'vue-router'
+import { useTodoStore } from '@/stores/todoStore';
+
 
 const routes = [
   {
@@ -10,6 +12,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
+    meta: { requiresAuth: true }, // 🔥 Marca que precisa estar logado
     component: () => import('@/views/HomeView.vue') // Confirme se o nome e o caminho estão corretos
   },
   {
@@ -58,5 +61,24 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const todoStore = useTodoStore();
+
+  // ⚡ Garante que o usuário carregado do localStorage
+  if (!todoStore.userLogado) {
+    const userData = localStorage.getItem('userLogado');
+    if (userData) {
+      todoStore.setUsuarioLogado(JSON.parse(userData));
+    }
+  }
+
+  if (to.meta.requiresAuth && !todoStore.userLogado) {
+    next('/'); // Se a rota precisar login e não tiver logado, vai para o login
+  } else {
+    next(); // Se não, segue normal
+  }
+});
+
 
 export default router
