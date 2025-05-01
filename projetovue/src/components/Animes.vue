@@ -124,7 +124,7 @@ import { onMounted, onBeforeUnmount, reactive } from 'vue';
 <style>
 
 .fundo-personalizado {
-  background-color: #313131;
+  background-color: #0f0f0f;
 }
 .v-app-bar {
   transition: background-color 0.3s ease, elevation 0.3s ease;

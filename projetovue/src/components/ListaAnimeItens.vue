@@ -8,7 +8,7 @@
         height="450"
         color="black" dark
       >
-         <!-- <img :src="image" alt="Imagem" height="500" width="1000" /> -->
+
          <v-img class="img align-end" :src="image" cover>{{ todos[n]?.title }}</v-img>
       </v-card>
     </v-window-item>
@@ -18,10 +18,10 @@
    <v-icon color="red">mdi-fire</v-icon> Animes em Alta <v-icon color="red">mdi-fire</v-icon>
   </v-card-title>
   <v-sheet
-    class="mx-auto"
+    class="mx-auto fundo"
     elevation="8"
     max-width="2000"
-    color="black" 
+
   >
     <v-slide-group
       v-model="model"
@@ -36,21 +36,21 @@
       >
         <v-card
           :color="isSelected ? 'primary' : 'black'"
-          class="ma-2"
-          height="200"
-          width="200"
+          class="ma-1"
+          height="280"
+          width="190"
           @click="toggle"
           style="border-radius: 10px;"
         >
         <div class="d-flex flex-column flex-ms-row">
             <v-img
               class="images align-end "
-              :src="`/imgs/${todo.image}`"
-              height="200"
+              :src="`${todo.image}`"
+              height="280"
               right="200"
               @click="goToAnime(todo.id)"
               style="cursor: pointer; "
-              ><v-card-title class="title">{{ todo.title }}</v-card-title></v-img> 
+              ></v-img> 
           </div>
           <div class="d-flex fill-height align-center justify-center">
             <v-scale-transition>
@@ -67,10 +67,16 @@
     </v-slide-group>
   </v-sheet>
 
-  <v-card-title class="text-h4 title">
-   <v-icon color="red">mdi-fire</v-icon> Animes em Alta <v-icon color="red">mdi-fire</v-icon>
-  </v-card-title>
-  
+  <v-container fluid class="pa-0 hells-paradise">
+  <v-row no-gutters class="fill-height d-flex align-center justify-center text-center text-red">
+    <v-col cols="12" md="6">
+      <h1 class="text-h3 font-weight-bold mb-4">Gostou dos nossos conteúdos?</h1>
+      <p class="text-subtitle-1">We know you'll love these</p>
+    </v-col>
+  </v-row>
+</v-container>
+
+ 
 </template>
 
 <script>
@@ -155,4 +161,17 @@ h2{
 .title{
   color: white;
 }
+.fundo{
+  background-color: rgba(15, 15, 15, 0.1);;
+}
+.hells-paradise {
+  background-image: url('/imgs/hellsParadise.jpg');
+  background-size: cover;
+  background-position: end;
+  min-height: 500px;
+  box-shadow: 2px 6px 25px rgba(192, 0, 0, 0.836);
+  border-radius: 8px;
+}
+
+
 </style>

@@ -1,5 +1,5 @@
 <template>  
-  <main class="d-flex ">
+  <main class="d-flex align-right ">
     <v-btn color="green" dark @click="dialog = true">
       <v-icon>mdi-plus</v-icon> Adicionar Anime
     </v-btn>
@@ -9,13 +9,13 @@
         <v-card-title class="text-h5">Adicionar Novo Anime</v-card-title>
 
         <v-form class="mt-4">
-          <v-file-input 
+          <v-text-field 
             v-model="image" 
-            label="Escolha uma imagem" 
+            label="Digite a Url da imagem" 
             accept="image/*"
             outlined
             class="mb-4"
-          ></v-file-input>
+          ></v-text-field>
 
           <v-text-field
             v-model="title"
@@ -31,9 +31,16 @@
             placeholder="Descreva o Anime"
             outlined
             class="mb-4"
-          >
+          ></v-text-field>
           
-          </v-text-field>
+          <v-text-field
+            v-model="categoria"
+            name="Categoria"
+            label="Categoria"
+            placeholder="Acao, hentai..."
+            class="mb-2"
+            outline
+          ></v-text-field>
 
           <v-card-actions class="justify-end">
             <v-btn color="error" @click="cancelar">Cancelar</v-btn>
@@ -56,6 +63,7 @@ export default {
     const dialog = ref(false)
     const title = ref('')
     const descrition = ref('')
+    const categoria = ref('')
     const image = ref(null)
 
     const confirmar = () => {
@@ -65,7 +73,8 @@ export default {
       }
       todoStore.addTodo({
         title: title.value,
-        descrition: descrition.value
+        descrition: descrition.value,
+        categoria: categoria.value
       })
       limpar()
       dialog.value = false // fecha o dialog só depois de confirmar
@@ -75,6 +84,7 @@ export default {
       title.value = ''
       descrition.value = ''
       image.value = null
+      categoria.value = ''
     }
 
     const cancelar = () => {
@@ -86,6 +96,7 @@ export default {
       dialog,
       title,
       descrition,
+      categoria,
       image,
       confirmar,
       cancelar,

@@ -50,7 +50,6 @@
   </v-app-bar>
 
   <v-main class="background">
-    <AdcionarAnime/>
     <EditarAnime/>
   </v-main>
 
@@ -92,7 +91,7 @@ export default {
 <style>
 .background {
   min-height: 100vh;
-  background-color: #494848;
+  background-color: #000000;
   
 }
 </style>
