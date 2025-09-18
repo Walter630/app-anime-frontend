@@ -4,6 +4,7 @@
       <div>
         <!-- Aqui vai o conteúdo das rotas -->
         <router-view />
+        <Animes/>
 
         <!-- Spinner global, se quiser -->
         <TodoSpinner v-if="loading" />
@@ -16,11 +17,12 @@
 import TodoSpinner from "./components/TodoSpinner.vue";
 import { onMounted, ref } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
+import Animes from "@/components/Animes.vue";
 
 
 export default {
   name: "App",
-  components: { TodoSpinner },
+  components: {Animes, TodoSpinner },
 
   setup() {
     const loading = ref(false);

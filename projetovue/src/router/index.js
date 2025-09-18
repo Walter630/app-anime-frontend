@@ -7,7 +7,7 @@ import { useTodoStore } from '@/stores/todoStore';
 const routes = [
   {
     path: '/',
-    redirect: '/login' // Redireciona para /cadastro ao acessar a raiz
+    redirect: '/' // Redireciona para /cadastro ao acessar a raiz
   },
   {
     path: '/home',
