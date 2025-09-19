@@ -8,7 +8,6 @@
         height="450"
         color="black" dark
       >
-
          <v-img class="img align-end" :src="image" cover>{{ todos[n]?.title }}</v-img>
       </v-card>
     </v-window-item>
@@ -18,9 +17,10 @@
    <v-icon color="red">mdi-fire</v-icon> Animes em Alta <v-icon color="red">mdi-fire</v-icon>
   </v-card-title>
   <v-sheet
-    class="mx-auto fundo"
+    class="mx-auto"
     elevation="8"
     max-width="2000"
+    style="margin-top: 40px; background-color: rgba(15, 15, 15, 0.1);"
 
   >
     <v-slide-group
@@ -41,17 +41,22 @@
           width="190"
           @click="toggle"
           style="border-radius: 10px;"
+
         >
+          <v-card-title>{{ todo.title }}</v-card-title>
         <div class="d-flex flex-column flex-ms-row">
+          <v-card-text>{{ todo.descrition }}</v-card-text>
             <v-img
               class="images align-end "
-              :src="`${todo.image}`"
+              :src="`${todo.image}` "
               height="280"
               right="200"
               @click="goToAnime(todo.id)"
               style="cursor: pointer; "
-              ></v-img> 
+              ></v-img>
+
           </div>
+
           <div class="d-flex fill-height align-center justify-center">
             <v-scale-transition>
               <v-icon
@@ -80,56 +85,53 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue'; // 👈 certifique-se de importar onMounted
 import { useTodoStore } from '@/stores/todoStore'
 import { useRouter } from "vue-router";
 
 export default {
-  name: "TodoList",
-  props: {
-    todo: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
   setup() {
     const todoStore = useTodoStore();
     const router = useRouter();
-    const todos = todoStore.todos;
-    
-    const length = ref(4);
+
+    const todos = computed(() => todoStore.todos);
+    const imageList = [
+        "/imgs/janela4.jpg",
+        "/imgs/janela1.jpg",
+        "/imgs/janela2.jpeg",
+        "/imgs/janela3One.jpg",
+    ]
     const onboarding = ref(0);
+    const model = ref(0);
 
-    const imageList = ref([
-        "/imgs/janela1.jpg", 
-        "/imgs/janela2.jpeg", 
-        "/imgs/janela3One.jpg", 
-        "/imgs/janela4.jpg"
-      ]);
 
-    const show = ref(false)
-
-    const toggleDone = (index) => {
-      todoStore.commit(toggleDone(), index);
-    };
-
-    const removeTodo = (index) => {
-      todoStore.commit(removeTodo(), index)
-    };
+    // 👇 CHAME getTodos() DENTRO DE onMounted
+    onMounted(async () => {
+      try {
+        console.log("Carregando animes...");
+        await todoStore.getTodos(); // ⚠️ Se isso falhar, o loading trava
+      } catch (error) {
+        console.error("Erro ao carregar animes:", error);
+        // Mesmo se falhar, não deixe o app travado
+      }
+    });
 
     const goToAnime = (id) => {
-      router.push({ name: "AnimeDetails", params: { id } });
+      if (!id) {
+        console.warn("ID inválido:", id);
+        return;
+      }
+      router.push({ name: "AnimeDetails", params: { id: id.toString() } });
     };
 
     return {
-      toggleDone,
-      removeTodo,
+      todos,
       goToAnime,
-      show, 
-      length,
-      onboarding,
       imageList,
-      todos
+      onboarding,
+      model,
+
+      // ... outros valores
     };
   },
 };
@@ -167,7 +169,6 @@ h2{
 .hells-paradise {
   background-image: url('/imgs/hellsParadise.jpg');
   background-size: cover;
-  background-position: end;
   min-height: 500px;
   box-shadow: 2px 6px 25px rgba(192, 0, 0, 0.836);
   border-radius: 8px;

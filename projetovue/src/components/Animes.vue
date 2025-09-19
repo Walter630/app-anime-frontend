@@ -1,59 +1,5 @@
 <template>
-   <v-app-bar :elevation="scrolling ? 0 : 2" color="black" dark :style="{ backgroundColor: scrolling ? 'transparent' : 'black' }">
-  <v-row class="d-flex align-center w-100" no-gutters>
-    <v-col cols="auto" class="d-flex align-center">
-      <v-app-bar-nav-icon class="d-none d-md-flex"></v-app-bar-nav-icon>
-      <v-card-title>
-        <img src="/logo.png" height="50" style="margin-top: 5px;" />
-      </v-card-title>
-    </v-col>
-    <v-col cols="auto" class="d-flex justify-end">
-      <v-app-bar-title class="d-none d-md-flex">Yokosu</v-app-bar-title>
-    </v-col>
-  </v-row>
 
-
-    <v-btn>
-       <p>animes</p>
-    </v-btn>
-    <v-btn>
-       <p>Sobre</p>
-    </v-btn>
-    <v-btn v-if="todoStore.userLogado?.email === 'walter@gmail.com'" @click="irPara('admin')">
-        <p>Admin</p>
-    </v-btn>
-    <v-menu max-width="200px"  :close-on-content-click="false">
-      <template v-slot:activator="{ props }">
-        <v-btn color="primary" dark v-bind="props"  >
-          <v-avatar image="/imgs/Nanatsu.jpg">
-        </v-avatar>
-      </v-btn>
-    </template>
-      <v-card>
-      <v-card-text>
-        <div class="mx-auto text-center">
-            <v-avatar
-              image="/imgs/Nanatsu.jpg"
-            />
-            <h3>{{ todoStore.userLogado?.name || 'Usuário não logado'}}</h3>
-            <p>{{ todoStore.userLogado?.email || 'Usuário não logado'}}</p>
-            <v-divider class="my-3"></v-divider>
-              <v-btn variant="text" rounded @click="editarConta()"> Editar conta </v-btn>
-              <v-divider class="my-3"></v-divider>
-              <v-btn variant="text" rounded @click="logout()">Sair</v-btn>
-          </div>
-      </v-card-text>   
-      </v-card>
-    </v-menu>
-
-    <v-btn icon >
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
-
-    <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
-  </v-app-bar>
   <div style="width: 100%;">
     <v-main class="pa-1 fundo-personalizado" style="margin-top: 1px; width: 100%;">
     <div>  

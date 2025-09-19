@@ -1,4 +1,5 @@
 <template>
+  <AppBarComponent />
     <div>
       <Animes />
     </div>
@@ -6,9 +7,9 @@
   
 <script>
 import Animes from '../components/Animes.vue'
-  
+import AppBarComponent from '../components/AppBarComponent.vue'
 export default {
-    components: { Animes }
+    components: { Animes, AppBarComponent }
   }
 </script>
   

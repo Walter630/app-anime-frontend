@@ -7,12 +7,12 @@ import { useTodoStore } from '@/stores/todoStore';
 const routes = [
   {
     path: '/',
-    redirect: '/' // Redireciona para /cadastro ao acessar a raiz
+    redirect: '/home' // Redireciona para /cadastro ao acessar a raiz
   },
   {
     path: '/home',
     name: 'home',
-    meta: { requiresAuth: true }, // 🔥 Marca que precisa estar logado
+    //meta: { requiresAuth: true }, // 🔥 Marca que precisa estar logado
     component: () => import('@/views/HomeView.vue') // Confirme se o nome e o caminho estão corretos
   },
   {

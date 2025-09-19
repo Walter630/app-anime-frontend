@@ -1,42 +1,44 @@
 <template>
   <v-app>
+
     <div>
-      <div>
+
         <!-- Aqui vai o conteúdo das rotas -->
         <router-view />
-        <Animes/>
 
         <!-- Spinner global, se quiser -->
         <TodoSpinner v-if="loading" />
-      </div>
+
     </div>
   </v-app>
 </template>
 
 <script>
 import TodoSpinner from "./components/TodoSpinner.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref } from "vue"; // ✅ ADICIONE onMounted AQUI!
 import { useTodoStore } from "@/stores/todoStore";
-import Animes from "@/components/Animes.vue";
 
 
 export default {
   name: "App",
-  components: {Animes, TodoSpinner },
+  components: { TodoSpinner },
 
   setup() {
     const loading = ref(false);
     const todoStore = useTodoStore();
-    
+
     todoStore.loadUsuarioLogado();
 
-    onMounted(async () => {
+    onMounted(async () => { // ✅ Agora onMounted está definido!
       loading.value = true;
-      // Esperar as ações de pegar os todos e usuários
-      await Promise.all([todoStore.getTodos(), todoStore.getUsuario()]);
-      loading.value = false;
+      try {
+        await Promise.all([todoStore.getTodos(), todoStore.getUsuario()]);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      } finally {
+        loading.value = false;
+      }
     });
-     // 🔥 carrega se tiver alguém logado
 
     return {
       loading,
